@@ -1,0 +1,42 @@
+package javaapplication90;
+
+import java.io.IOException;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+
+
+public class JavaApplication90 {
+    public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
+       
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        Document doc = db.parse("knjige.xml");
+        Element katalog = doc.getDocumentElement();
+        NodeList books = katalog.getElementsByTagName("book");
+        System.out.println("Knjige:");
+        for (int i = 0; i < books.getLength(); i++) {
+        Element book = (Element) books.item(i);
+        //System.out.println("----------------------------");
+        String autor = book.getElementsByTagName("author").item(0).getTextContent();
+        String naziv = book.getElementsByTagName("title").item(0).getTextContent();
+        String zanr = book.getElementsByTagName("genre").item(0).getTextContent();
+        double cena = Double.parseDouble(book.getElementsByTagName("price").item(0).getTextContent());
+        int datum = Integer.parseInt(book.getElementsByTagName("publish_date").item(0).getTextContent().substring(0, 4));
+        String opis = book.getElementsByTagName("description").item(0).getTextContent();
+        
+            if (cena>10 && datum>2005) {
+        System.out.println("----------------------------");
+        System.out.println("Autor knjige: "+autor+"\n"+"Naziv: "+naziv+"\n"+
+                "Zanr: "+zanr+"\n"+"Cena: "+cena+"\n"+"Izdato: "+datum+"god."+"\n"+"Kratak opis: "+opis);
+        }
+        }
+        
+    }
+    
+}
